@@ -1,0 +1,88 @@
+package averagesalary;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class main {
+
+	static WebDriver wd = null;
+
+	public static void main(String[] args) {
+
+		downloadFile("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1Ne6aIrS3_aO3xuVt6LCXP6gAnd_xBd7_", "chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+		wd = new ChromeDriver();
+		wd.manage().window().maximize();
+		long sum = 0;
+		int iter = 0;
+		for (int j = 0; j < 20; j++) {
+			wd.get("https://hh.ru/search/vacancy?L_is_autosearch=false&area=1&clusters=true&enable_snippets=true&text=Java+developer&page="
+					+ j);
+
+			for (int i = 1; i < 24; ++i)
+				try {
+					String sal = wd.findElement(
+							By.xpath("/html/body/div[6]/div/div/div[2]/div/div[3]/div/div[2]/div/div[2]/div/div/div["
+									+ i + "]/div[1]/div[2]/div"))
+							.getText();
+					System.out.println(sal);
+					int min;
+					int max;
+					int avr;
+					String[] splt = sal.split(" ");
+					String[] splt2;
+					if (sal.contains("from"))
+						avr = Integer.parseInt(splt[1] + splt[2]);
+					else if (sal.contains("to"))
+						avr = Integer.parseInt(splt[1] + splt[2]);
+					else {
+						splt2 = splt[1].split("-");
+						min = Integer.parseInt(splt[0] + splt2[0]);
+						max = Integer.parseInt(splt2[1] + splt[2]);
+						avr = (int) (min + max) / 2;
+					}
+					if (sal.contains("USD"))
+						avr *= 62;
+					else if (sal.contains("EUR"))
+						avr *= 69;
+					sum += avr;
+					iter++;
+					System.out.println(avr + " RUB");
+				} catch (Exception e) {
+					//for debugging
+				} finally {
+					//for debugging
+				}
+		}
+		System.out.println("Average salary for Java developer is about " + (sum / iter) + " RUB");
+		wd.close();
+	}
+	
+	public static void downloadFile(String host, String fileName) {
+        try {
+            URL url = new URL(host);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+ 
+            BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+ 
+            File f1 = new File(fileName);
+            FileOutputStream fw = new FileOutputStream(f1);
+ 
+            byte[] b = new byte[1024];
+            int count;
+ 
+            while ((count=bis.read(b)) != -1)
+                fw.write(b,0,count);
+ 
+            fw.close();
+        } catch (IOException ex) {
+            System.err.println("Error " + ex.getMessage());
+        }
+        }
+	
+}
