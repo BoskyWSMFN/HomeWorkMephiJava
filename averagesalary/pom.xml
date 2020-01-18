@@ -21,5 +21,10 @@
   		<artifactId>selenium-java</artifactId>
   		<version>3.141.59</version>
   	</dependency>
+  	<dependency>
+	<groupId>org.bluestemsoftware.open.maven.plugin</groupId>
+	<artifactId>ftp-plugin</artifactId>
+	<version>1.0.0.2</version>
+    </dependency>
   </dependencies>
 </project>

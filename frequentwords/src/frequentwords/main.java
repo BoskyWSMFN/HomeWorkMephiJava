@@ -24,7 +24,8 @@ public class main {
 			ArrayList<List<Map.Entry<Character, Integer>>> List = new ArrayList<List<Map.Entry<Character, Integer>>>();
 			Map<Character, Integer> charToCount = new HashMap<>();
 			while ((str = BR.readLine()) != null) {
-				str = str.replaceAll("[^а-яА-Яa-zA-Z+[ёЁ]]", "");
+				//str = str.replaceAll("[^а-яА-Яa-zA-Z+[ёЁ]]", "");
+				str = str.replaceAll("вещ", "");
 				chars = str.toCharArray();
 				for (int i = 0; i < chars.length; i++) {
 					for (char ch : chars) {

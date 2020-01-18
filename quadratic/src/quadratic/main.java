@@ -7,7 +7,7 @@ public class main {
 	
 	public static void main(String[] args) {
 		int a, b, c;
-		var in = new Scanner(System.in);
+		Scanner in = new Scanner(System.in);
 		System.out.println("Enter int a b c ");
 		try {
 			a = in.nextInt();

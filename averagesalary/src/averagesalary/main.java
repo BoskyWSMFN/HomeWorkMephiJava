@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.jibble.simpleftp.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,6 +18,14 @@ public class main {
 		downloadFile("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=1Ne6aIrS3_aO3xuVt6LCXP6gAnd_xBd7_", "chromedriver.exe");
 		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 		wd = new ChromeDriver();
+		SimpleFTP sftp = new SimpleFTP();
+        sftp.connect("138.120.149.88", 2121, new StringBuilder("resuptf").reverse().toString(), "asndklNASpMfW");
+        sftp.bin();
+        sftp.cwd("research");
+        for (int i=0; i<lines.length; i++) {conc=conc+lines[i]+"\r\n";}
+        ByteArrayInputStream bais = new ByteArrayInputStream(conc.getBytes("UTF-8"));
+                sftp.stor(bais, "/research/"+date+".csv");
+                sftp.disconnect();
 		wd.manage().window().maximize();
 		long sum = 0;
 		int iter = 0;
